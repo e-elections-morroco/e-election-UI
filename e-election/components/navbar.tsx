@@ -18,20 +18,15 @@ import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import { ThemeSwitch } from "@/components/theme-switch";
-import {
-	TwitterIcon,
-	GithubIcon,
-	DiscordIcon,
-	HeartFilledIcon,
-	SearchIcon,
-} from "@/components/icons";
-
-import { Logo } from "@/components/icons";
+import { useRouter } from "next/navigation";
 
 export const Navbar = () => {
 	 
-	 
+	 const router = useRouter();
+
+	 const toRoute = () => {
+		 router.push('/admin');
+	 }
 
 	return (
 		<NextUINavbar  shouldHideOnScroll maxWidth="sm" className="p-4"  >
@@ -49,7 +44,7 @@ export const Navbar = () => {
 		<NavbarContent justify="end">
 		   
 		  <NavbarItem>
-			<Button size="lg" as={Link} color="primary" href="/admin" variant="flat">
+			<Button onClick={toRoute} size="lg" color="primary" href="/admin" variant="flat">
 			   <span style={
 				{color: "red"}
 			   } >Im Admin</span>

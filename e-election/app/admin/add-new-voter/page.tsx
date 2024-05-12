@@ -3,22 +3,25 @@ import React, { useState } from "react";
 import { Card, CardBody, CardHeader, Input, Image, DateInput, Button, CardFooter, User, Avatar } from "@nextui-org/react";
 import { CalendarDate } from "@internationalized/date";
 import Webcam from "react-webcam";
+import { toast } from 'react-hot-toast';
 
 export default function App() {
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
+  const [done, setDone] = React.useState(0);
   const constraints = {
     facingMode: { exact: "user" },
   };
+   
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    birthDate: "",
+    birthDate: "15/10/2002",
     cin: "",
-    address: "",
+    city: "",
     picture: ""
   });
   const [timer , setTimer] = useState(5);
@@ -35,6 +38,7 @@ export default function App() {
         if (prev === 0) {
           clearInterval(interval);
           takePicture();
+          setDone(1);
           return 5;
         }
         return prev - 1;
@@ -48,7 +52,7 @@ export default function App() {
       // You can perform further processing or send the image to the backend here
       // Display a message or handle the image as needed
       setStep(3);
-      alert("Picture taken!");
+      toast.success('Picture Saved Successfully');
     } else {
       // Handle the case when webcamRef.current is null
       console.error("Webcam reference is not available.");
@@ -57,9 +61,13 @@ export default function App() {
  
 
   return (
-    <Card className="p-10">
-      <CardHeader className="pb-0 p-2 px-2 flex-col items-center">
-        <h1 className="font-bold text-large">Information Requested</h1>
+    <Card className="p-10" style={
+        {
+            marginTop: "-70px",
+        }
+    }>
+      <CardHeader className="pb-0 p-2 px-2 flex-col items-center text-danger">
+        <h1 className="font-bold text-large">add the voter info</h1>
       </CardHeader>
       <CardBody className="overflow-visible py-2">
         {step === 1 && (
@@ -92,8 +100,8 @@ export default function App() {
               />
             </div>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-              <Input type="text" label="Your address" 
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+              <Input type="text" label=" city" 
+              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
               />
             </div>
           </div>
@@ -103,10 +111,11 @@ export default function App() {
             <div className=" ">
             <Card radius= "none" shadow="none">
       <CardBody className="text-center text-danger text-bold">
-    <span style={
+    <span  style={
       {fontSize: "2rem" , 
       fontWeight: "bold" ,
-      color: "red"
+      color: "red",
+      marginTop: "-20px"
       }
     
     }>
@@ -127,24 +136,44 @@ export default function App() {
         {step === 3 && (
            <Card className="w-full md:w-96"> {/* Adjust the width as needed */}
            <CardBody className="p-8 flex flex-col items-center">
-           <Avatar size= "lg" src={ imgSrc ? imgSrc : "" } className="w-20 h-20 text-large"  />
-
-             <p className="mt-4 text-center"> {/* Center-align the text */}
-               Phone: {formData.phone}<br />
-               Birth Date: {formData.birthDate}<br />
-               CIN: {formData.cin}<br />
-               Address: {formData.address}
-             </p>
+             <Avatar size="lg" src={imgSrc ? imgSrc : ""} className="w-20 h-20 text-large" />
+         
+             <div className="mt-4 text-center">
+               <p>
+                 Name: {formData.firstName} {formData.lastName}
+               </p>
+               <p>
+                 Email: {formData.email}
+               </p>
+               <p>
+                 Phone: {formData.phone}
+               </p>
+               <p>
+                 Birth Date: {formData.birthDate}
+               </p>
+               <p>
+                 CIN: {formData.cin}
+               </p>
+               <p>
+                 City: {formData.city}
+               </p>
+             </div>
            </CardBody>
          </Card>
         )}
       </CardBody>
       <div className="flex flex-col items-center justify-center mt-5">
-        {step === 1 ?
-          <Button onClick={toStep2}>Next</Button>
-          :
-          <Button onClick={startTimer}>Take Picture</Button>
+        {step === 1 &&
+          <Button onClick={toStep2} color="danger" variant="bordered" >Next</Button> 
         }
+          {step == 2  &&
+          <Button onClick={startTimer} color="danger" variant="bordered"  >Take Picture</Button> 
+          
+          }
+            {step == 3  &&
+            <Button onClick={()=>alert("done")} color="danger" variant="bordered" >Save Voter</Button>
+            }
+
       </div>
     </Card>
   );

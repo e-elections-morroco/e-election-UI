@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
-
+import  {Navbar} from "@/components/navbar";
 export default function Home() {
 	const router = useRouter();
 
@@ -16,8 +16,16 @@ export default function Home() {
 
 
 	return (
-		<section className="flex justify-around">
-
+		<div>
+			<div style={
+				{
+					marginTop: "-50px",
+				}
+			}>
+			<Navbar />
+			</div>
+			<section className="flex justify-around">
+		
 			<div className="flex flex-col items-right  gap-10 py-10 md:py-10 mt-12 ml-12">
 				<div className="inline-block max-w-lg text-center justify-center">
 				<h1 className={title({ color: "green" })}>الإلكترونية&nbsp;</h1>
@@ -31,7 +39,7 @@ export default function Home() {
 				<div className="inline-block max-w-lg text-center justify-center">
 					<Button
 						 
-						onClick={() => toRout("/citizen1")}
+						onClick={() => toRout("/citizen")}
 						className={buttonStyles({ color: "danger", radius: "full", variant: "bordered" })}
 					>
 						<span >ابدأ الآن</span>
@@ -51,6 +59,8 @@ export default function Home() {
 
 				
 		</section>
+		</div>
+		
 		
 	);
 }
