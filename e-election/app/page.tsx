@@ -1,12 +1,20 @@
-import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code"
+"use client"
 import { button as buttonStyles } from "@nextui-org/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
-import { color } from "framer-motion";
- 
+import { Button } from "@nextui-org/button";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
+	const router = useRouter();
+
+		const toRout = (path: string) => {
+			router.push(path);
+		}
+
+
+
+
 	return (
 		<section className="flex justify-around">
 
@@ -21,13 +29,13 @@ export default function Home() {
 			    </div>
 
 				<div className="inline-block max-w-lg text-center justify-center">
-					<Link
-						isExternal
-						href={'/citizen1'}
+					<Button
+						 
+						onClick={() => toRout("/citizen1")}
 						className={buttonStyles({ color: "danger", radius: "full", variant: "bordered" })}
 					>
 						<span >ابدأ الآن</span>
-					</Link>
+					</Button>
 					
 				</div>
 			</div>
