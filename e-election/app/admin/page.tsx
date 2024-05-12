@@ -2,25 +2,37 @@
 import React, { useState } from "react";
 import {Card, CardBody, CardHeader, Input , Image, DateInput, Button, CardFooter} from "@nextui-org/react";
 import {CalendarDate} from "@internationalized/date";
- 
+import toast from "react-hot-toast"; 
+import { useRouter } from "next/navigation";
+
+
+
 
 export default function App() {
 
+ 
+  const router = useRouter();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        birthDate: "",
-        cin: "",
-        address: "",
-        picture: ""
+        codeEmploye: "",
+        password: "",
     });
 
-    const toStep2 = () => {
-        if( step === 1 ) setStep(2);
-        else setStep(1);
+    
+
+     const user = {
+
+        codeEmploye: "123456",
+        password  : "123456"
+    }
+
+    const login = () => {
+        if(formData.codeEmploye === user.codeEmploye && formData.password === user.password){
+            toast.success("login success");
+            router.push("/admin/add-new-voter");
+        }else{
+            toast.error("wrong cridentials");
+        }
     }
 
   return (
@@ -35,7 +47,9 @@ export default function App() {
     <div className="flex flex-col gap-4 text-danger">
       <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      <Input type="text" label="Code employe" />
+      <Input type="text" label="Code employe" 
+      onChange={(e) => setFormData({ ...formData, codeEmploye: e.target.value })}
+      />
       
       
     </div>
@@ -43,7 +57,9 @@ export default function App() {
 
       </div>
       <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-      <Input type="password" label="password" />
+      <Input type="password" label="password" 
+      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+      />
        
       
       
@@ -58,7 +74,7 @@ export default function App() {
      
    <div className="flex flex-col items-center justify-center mt-5  ">
    <Button 
-    color="danger" variant="bordered"
+    color="danger" variant="bordered" onClick={login}
    >
         login
     </Button>

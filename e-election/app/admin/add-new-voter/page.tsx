@@ -4,8 +4,334 @@ import { Card, CardBody, CardHeader, Input, Image, DateInput, Button, CardFooter
 import { CalendarDate } from "@internationalized/date";
 import Webcam from "react-webcam";
 import { toast } from 'react-hot-toast';
+import Web3 from "web3";
+import { useRouter } from "next/navigation";
+const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
+const contractABI = [
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "getUserByAddress",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_dateOfBirth",
+"type": "string"
+}
+],
+"name": "getUserByCinAndDateOfBirth",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+},
+{
+"internalType": "string",
+"name": "_firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_phone",
+"type": "string"
+}
+],
+"name": "setUser",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "uint256",
+"name": "",
+"type": "uint256"
+}
+],
+"name": "userAddresses",
+"outputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"name": "users",
+"outputs": [
+{
+"internalType": "string",
+"name": "firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "CIN",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "phone",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "vote",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+}
+];
+
 
 export default function App() {
+
+  const router = useRouter();
+  let contract: any;
+  let account: any;
+  const connectMetamask = async () => {
+    try {
+      if ((window as any).ethereum) {
+        const accounts = await (window as any).ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        account = accounts[0];
+        console.log(account);
+      } else {
+        console.log("Please install Metamask or use a web3 browser");
+      }
+    } catch (error) {
+      console.error(error);
+      console.log("An error occurred while connecting Metamask");
+    }
+  };
+  // // Define a function to connect the contract
+  const connectContract = async () => {
+    try {
+      if (account) {
+        (window as any).web3 = new Web3((window as any).ethereum);
+        contract = new (window as any).web3.eth.Contract(
+          contractABI,
+          contractAddress
+        );
+        console.log("Connected to contract at address: " + contractAddress);
+      } else {
+        console.log("Please connect to MetaMask first");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const setUserInfo = async () => {
+    try {
+        if (account) {
+             
+            await  contract.methods.setUser(account, formData.firstName, formData.lastName, formData.birthDate, formData.cin, formData.email, formData.city, formData.phone).send({ from: account });
+            toast.success("Voter added successfully!");
+        } else {
+            toast.error("Veuillez d'abord vous connecter à MetaMask");
+        }
+    } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors de la définition des informations utilisateur");
+     }
+}
+
+
+const handleRegister = async () => {
+    try {
+        await connectMetamask();
+        await connectContract();
+        await setUserInfo();
+        toast.success("Voter added successfully!");
+
+    } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors de l'inscription");
+    }
+
+}
+
+
+
+
+
+
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
   const [done, setDone] = React.useState(0);
@@ -171,10 +497,11 @@ export default function App() {
           
           }
             {step == 3  &&
-            <Button onClick={()=>alert("done")} color="danger" variant="bordered" >Save Voter</Button>
+            <Button onClick={handleRegister} color="danger" variant="bordered" >Save Voter</Button>
             }
 
       </div>
     </Card>
   );
 }
+

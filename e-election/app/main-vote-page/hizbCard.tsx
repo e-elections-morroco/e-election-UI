@@ -12,15 +12,7 @@ interface HizbCardProps {
 }
 
 const HizbCard: React.FC<HizbCardProps> = ({ hizb }) => {
-  const handleLocalChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    // Handle local select change
-  };
-
-  const handleNationalChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    // Handle national select change
-  };
+   
 
   return (
     <div>

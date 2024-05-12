@@ -3,33 +3,285 @@ import React, { useState } from "react";
 import { Card, CardBody, CardHeader, Input, Image, DateInput, Button, CardFooter, User, Avatar } from "@nextui-org/react";
 import { CalendarDate } from "@internationalized/date";
 import Webcam from "react-webcam";
+import Web3 from "web3";
 import { toast } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
+const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
+const contractABI = [
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "getUserByAddress",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_dateOfBirth",
+"type": "string"
+}
+],
+"name": "getUserByCinAndDateOfBirth",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+},
+{
+"internalType": "string",
+"name": "_firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_phone",
+"type": "string"
+}
+],
+"name": "setUser",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "uint256",
+"name": "",
+"type": "uint256"
+}
+],
+"name": "userAddresses",
+"outputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"name": "users",
+"outputs": [
+{
+"internalType": "string",
+"name": "firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "CIN",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "phone",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "vote",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+}
+];
+
+
 
 export default function App() {
+
+
+
+ 
+  const [loding , setLoding] = useState(false);
+
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
   const constraints = {
     facingMode: { exact: "user" },
   };
   const [isVoted , setIsVoted] = useState(false);
-   const [isEligible , setIsEligible] = useState(false);
+   const [isEligible , setIsEligible] = useState(true);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    birthDate: "",
+  
     cin: "",
-    address: "",
-    picture: ""
+    birthDate: "",
   });
   const [timer , setTimer] = useState(5);
 
-  const toStep2 = () => {
-    setStep(2);
-    
-  };
+  
       // i want to change it to set intervalle 
 
   const startTimer = () => {
@@ -59,6 +311,101 @@ export default function App() {
   };
  
 
+  const router = useRouter();
+  let contract: any;
+  let account: any;
+   
+  const connectMetamask = async () => {
+    try {
+      if ((window as any).ethereum) {
+        const accounts = await (window as any).ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        account = accounts[0];
+        console.log(account);
+      } else {
+        console.log("Please install Metamask or use a web3 browser");
+      }
+    } catch (error) {
+      console.error(error);
+      console.log("An error occurred while connecting Metamask");
+    }
+  };
+  // // Define a function to connect the contract
+  const connectContract = async () => {
+    try {
+      if (account) {
+        (window as any).web3 = new Web3((window as any).ethereum);
+        contract = new (window as any).web3.eth.Contract(
+          contractABI,
+          contractAddress
+        );
+        console.log("Connected to contract at address: " + contractAddress);
+      } else {
+        console.log("Please connect to MetaMask first");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserByCinAndDateOfBirth = async () => {
+    try {
+        if (account) {
+             
+            const user = await contract.methods.getUserByCinAndDateOfBirth( formData.cin,formData.birthDate).send({ from: account });
+            toast.success("logged successfuly !");
+            console.log(user);
+            console.log(user[0]);
+            console.log(user[1]);
+            console.log(user[2]);
+        } else {
+            toast.error("Veuillez d'abord vous connecter à MetaMask");
+        }
+    } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors de la définition des informations utilisateur");
+     }
+}
+
+
+const handleLogin = async () => {
+    try {
+        await connectMetamask();
+        await connectContract();
+        await getUserByCinAndDateOfBirth();
+        toast.success("Welcome!");
+
+    } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors de l'inscription");
+    }
+
+}
+const toStep2 = async () => {
+    try {
+        // set the loading state to true
+        setLoding(true);
+        await connectMetamask();
+        await connectContract();
+        await getUserByCinAndDateOfBirth();
+        setStep(2);
+        // set the loading state to false
+        setLoding(false);
+
+
+
+         
+    } catch (error) {
+        console.error(error);
+        toast.error("Une erreur s'est produite lors de la connexion");
+        setStep(1);
+    }
+}
+
+ const toRoute = ()=>{
+    router.push("/main-vote-page");
+ }
   return (
     <Card className="p-10" style={{ marginTop: step === 2 ? "-70px" : "" }}>
     <CardHeader className="pb-0 p-2 px-2 flex-col items-center">
@@ -67,7 +414,10 @@ export default function App() {
       )
       }
     {step === 2 && (
+      <div>
+        <h2>مرحبا Haddad Mohammed</h2>
       <h1 className="font-bold text-large text-danger text-bold " >التقاط صورة</h1>
+      </div>
       )}
       
     </CardHeader>
@@ -75,10 +425,25 @@ export default function App() {
 
      {
         step === 1 && (
-          <div className="flex flex-col gap-4 text-danger">
+
+              
+
+        <div>
+
+            {
+              loding && (
+                <div className="flex justify-center items-center">
+                  <p>loading...</p>
+                </div>
+              )
+            }
+
+            <div className="flex flex-col gap-4 text-danger">
           <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
           <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-          <Input type="text" label="رقم البطاقة الوطنية" />
+          <Input type="text" label="رقم البطاقة الوطنية"  
+          onChange={(e) => setFormData({ ...formData, cin: e.target.value })}
+          />
           
           
         </div>
@@ -98,7 +463,12 @@ export default function App() {
         </div>
          
         
-        </div> )
+        </div> 
+        </div>
+        
+      
+      
+      )
      }
      
       {
@@ -212,7 +582,8 @@ export default function App() {
                      </p>
                       <Button 
                       color="danger" variant="bordered"
-                      onClick={startTimer}
+                      onClick={ toRoute
+                      }
                      >
                           التالي
                      </Button>
