@@ -256,7 +256,8 @@ const contractABI = [
 "type": "function"
 }
 ];
-
+// import the axios to handle a backend request 
+import axios from "axios";
 
 export default function App() {
 
@@ -374,7 +375,12 @@ const handleRegister = async () => {
   const takePicture = async () => {
     if (webcamRef.current) {
       const imageSrc = (webcamRef.current as any).getScreenshot(); // Type assertion
+
+        // make a request to 
+
       setImgSrc(imageSrc);
+
+
       // You can perform further processing or send the image to the backend here
       // Display a message or handle the image as needed
       setStep(3);
