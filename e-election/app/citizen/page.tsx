@@ -6,6 +6,7 @@ import Webcam from "react-webcam";
 import Web3 from "web3";
 import { toast } from 'react-hot-toast';
 import { useRouter } from "next/navigation";
+import axios from "axios";
 const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
 const contractABI = [
 {
@@ -262,7 +263,22 @@ const contractABI = [
 export default function App() {
 
 
-
+  const base64ToBlob = (base64: any, contentType: any) => {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: contentType });
+  };
+  
+  const base64ToFile = (base64: any, filename: any) => {
+    const contentType = base64.split(',')[0].split(':')[1].split(';')[0];
+    const blob = base64ToBlob(base64, contentType);
+    return new File([blob], filename, { type: contentType });
+  };
+  
  
   const [loding , setLoding] = useState(false);
 
@@ -299,11 +315,54 @@ export default function App() {
   const takePicture = async () => {
     if (webcamRef.current) {
       const imageSrc = (webcamRef.current as any).getScreenshot(); // Type assertion
+      const imageFile = base64ToFile(imageSrc, 'uploaded_image.png');
+
       setImgSrc(imageSrc);
-      // You can perform further processing or send the image to the backend here
-      // Display a message or handle the image as needed
-      setStep(3);
+      console.log('imageFile :', imageFile);
+  
+      const formData2 = new FormData();
+      formData2.append('image', imageFile);
+      formData2.append('cin', formData.cin); // Ensure you include the cin field if it's required by the API
+  
+      console.log('formData :', formData);
+      for (const pair of formData2.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+      }
+      
+           // Log the FormData contents (for debugging purposes)
+     
+      // 1 check if the image is valide or not BY calling the api  /api/image/is-valid
+      try {
+        const response = await axios.post('http://localhost:5000/api/image/check-face', formData2, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        console.log('Response:' );
+        console.log(response.data);
+        if (response.data.valid_image) {
+          console.log('Image is valid');
+          toast.success('You are the right person');
+          setStep(3);
+          }
+          else {
+            console.log('Image is invalid');
+            toast.error('Invalid Image');
+            
+          }
+      } catch (error : any) {
+        if (error.response) {
+          console.error('Error response:', error.response.data);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+        } else {
+          console.error('Error setting up request:', error.message);
+        }
+      }
       toast.success('Picture Saved Successfully');
+
+
+
     } else {
       // Handle the case when webcamRef.current is null
       console.error("Webcam reference is not available.");
