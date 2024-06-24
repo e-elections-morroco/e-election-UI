@@ -264,6 +264,29 @@ export default function App() {
   const router = useRouter();
   let contract: any;
   let account: any;
+
+
+
+
+  function base64ToBlob(base64: any, contentType: any) {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteNumbers = new Array(byteCharacters.length);
+  
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+  
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: contentType });
+  }
+  
+  // Convert Base64 string to a File
+  function base64ToFile(base64: any, filename: any) {
+    const contentType = base64.split(',')[0].split(':')[1].split(';')[0];
+    const blob = base64ToBlob(base64, contentType);
+    return new File([blob], filename, { type: contentType });
+  }
+  
   const connectMetamask = async () => {
     try {
       if ((window as any).ethereum) {
@@ -375,14 +398,42 @@ const handleRegister = async () => {
   const takePicture = async () => {
     if (webcamRef.current) {
       const imageSrc = (webcamRef.current as any).getScreenshot(); // Type assertion
+      const imageFile = base64ToFile(imageSrc, 'uploaded_image.png');
 
         // make a request to 
 
       setImgSrc(imageSrc);
-
+        console.log('imageFile :');
+        console.log(imageFile);
 
       // You can perform further processing or send the image to the backend here
       // Display a message or handle the image as needed
+
+      const formData = new FormData();
+      // Append the image file to the form data
+      formData.append('image', imageFile);
+          console.log('formData :');
+          console.log(formData);
+      // 1 check if the image is valide or not BY calling the api  /api/image/is-valid
+
+      const response = await axios.post('http://localhost:5000/api/image/is-valid', formData ,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }});
+
+
+      console.log(response.data);
+
+
+    
+      // 2 send the image to the backend
+
+
+
+
+
+
+
       setStep(3);
       toast.success('Picture Saved Successfully');
     } else {
