@@ -413,6 +413,8 @@ export default function App() {
   const router = useRouter();
   let contract2: any;
   let account: any;
+  let contract1: any;
+
 
   const connectMetamask = async () => {
     try {
@@ -439,7 +441,13 @@ export default function App() {
           contractABI2,
           contractAddress2
         );
+        (window as any).web3 = new Web3((window as any).ethereum);
+        contract1 = new (window as any).web3.eth.Contract(
+          contractABI1,
+          contractAddress1
+        );
         console.log("Connected to contract2 at address: " + contractAddress2);
+        console.log("Connected to contract1 at address: " + contractAddress1);
       } else {
         console.log("Please connect to MetaMask first");
       }
@@ -452,8 +460,10 @@ export default function App() {
     try {
       if (account && contract2) {
 
+        await contract1.methods.vote(account).send({ from: account });
         await contract2.methods.vote(formData.uid).send({ from: account });
         console.log("UID",formData.uid);
+       
         toast.success("You voted successfully!");
         router.push("/");
       } else {
@@ -461,7 +471,7 @@ export default function App() {
       }
     } catch (error) {
       console.error(error);
-      toast.error("An error occurred while voting");
+      toast.error("User Already Voted!");
     }
   };
 

@@ -10,7 +10,7 @@
             "isVoted" : false
         },
         {
-            "uid": "2",
+            "uid": "3",
             "NAME": "Emma Green",
             "PHOTO": "https://randomuser.me/api/portraits/women/6.jpg",
             "DESCRIPTION": "Emma Green, born on January 5, 1969, is a university professor specializing in the sociology of languages. She served as the Minister of Youth and Sports until her resignation in 2015.",
@@ -19,7 +19,7 @@
             "isVoted" : false
         },
         {
-            "uid": "3",
+            "uid": "4",
             "NAME": "Daniel Black",
             "PHOTO": "https://randomuser.me/api/portraits/men/7.jpg",
             "DESCRIPTION": "Daniel Black, born on February 12, 1972, is a political leader who has served in various governmental positions. He is currently the leader of the Constitutional Union Party.",
@@ -28,7 +28,7 @@
             "isVoted" : false
         },
         {
-            "uid": "4",
+            "uid": "5",
             "NAME": "John Doe",
             "PHOTO": "https://randomuser.me/api/portraits/men/1.jpg",
             "DESCRIPTION": "John Doe (born April 2, 1954) is a seasoned politician who served as the Prime Minister from November 29, 2011, to April 5, 2017. He has been the Secretary-General of the Progressive Party since July 20, 2008, and a member of Parliament since November 14, 1997.",
@@ -37,7 +37,7 @@
             "isVoted" : false
         },
         {
-            "uid": "5",
+            "uid": "6",
             "NAME": "Jane Smith",
             "PHOTO": "https://randomuser.me/api/portraits/women/2.jpg",
             "DESCRIPTION": "Jane Smith (born 1961) is a businesswoman and politician who has been serving as the Prime Minister since September 10, 2021. She is also the CEO of Aqua Group and the Secretary-General of the National Alliance Party.",
@@ -46,7 +46,7 @@
             "isVoted" : false
         },
         {
-            "uid": "6",
+            "uid": "7",
             "NAME": "Alice Johnson",
             "PHOTO": "https://randomuser.me/api/portraits/women/3.jpg",
             "DESCRIPTION": "Alice Johnson, born on September 25, 1954, has been a dedicated activist since the 1970s. She has held various positions within the Social Unity Party and served as the head of the party's parliamentary group from 1999 to 2007.",
@@ -55,7 +55,7 @@
             "isVoted" : false
         },
         {
-            "uid": "7",
+            "uid": "8",
             "NAME": "Robert Brown",
             "PHOTO": "https://randomuser.me/api/portraits/men/4.jpg",
             "DESCRIPTION": "Dr. Robert Brown was elected as the Secretary-General of the Independence Party on October 7, 2017. Born in 1964, he has been an active member of the party since his teenage years.",

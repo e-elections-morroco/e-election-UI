@@ -6,7 +6,6 @@ import {
   CardHeader,
   Input,
   Image,
- 
   DateInput,
   Button,
   CardFooter,
@@ -19,257 +18,261 @@ import Web3 from "web3";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
-const contractABI= [
-{
-"inputs": [
-{
-"internalType": "address",
-"name": "_userAddress",
-"type": "address"
+interface User {
+  firstName: string;
+  lastName: string;
 }
-],
-"name": "getUserByAddress",
-"outputs": [
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "bool",
-"name": "isVoted",
-"type": "bool"
-}
-],
-"stateMutability": "view",
-"type": "function"
-},
-{
-"inputs": [
-{
-"internalType": "string",
-"name": "_cin",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_dateOfBirth",
-"type": "string"
-}
-],
-"name": "getUserByCinAndDateOfBirth",
-"outputs": [
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "",
-"type": "string"
-},
-{
-"internalType": "bool",
-"name": "isVoted",
-"type": "bool"
-}
-],
-"stateMutability": "view",
-"type": "function"
-},
-{
-"inputs": [
-{
-"internalType": "address",
-"name": "_userAddress",
-"type": "address"
-},
-{
-"internalType": "string",
-"name": "_firstName",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_lastName",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_birthDate",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_cin",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_email",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_ville",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "_phone",
-"type": "string"
-}
-],
-"name": "setUser",
-"outputs": [],
-"stateMutability": "nonpayable",
-"type": "function"
-},
-{
-"inputs": [
-{
-"internalType": "uint256",
-"name": "",
-"type": "uint256"
-}
-],
-"name": "userAddresses",
-"outputs": [
-{
-"internalType": "address",
-"name": "",
-"type": "address"
-}
-],
-"stateMutability": "view",
-"type": "function"
-},
-{
-"inputs": [
-{
-"internalType": "address",
-"name": "",
-"type": "address"
-}
-],
-"name": "users",
-"outputs": [
-{
-"internalType": "string",
-"name": "firstName",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "lastName",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "birthDate",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "CIN",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "email",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "ville",
-"type": "string"
-},
-{
-"internalType": "string",
-"name": "phone",
-"type": "string"
-},
-{
-"internalType": "bool",
-"name": "isVoted",
-"type": "bool"
-}
-],
-"stateMutability": "view",
-"type": "function"
-},
-{
-"inputs": [
-{
-"internalType": "address",
-"name": "_userAddress",
-"type": "address"
-}
-],
-"name": "vote",
-"outputs": [],
-"stateMutability": "nonpayable",
-"type": "function"
-}
-];
 
+const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
+const contractABI = [
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_userAddress",
+        type: "address",
+      },
+    ],
+    name: "getUserByAddress",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isVoted",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_cin",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_dateOfBirth",
+        type: "string",
+      },
+    ],
+    name: "getUserByCinAndDateOfBirth",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isVoted",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_userAddress",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_firstName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_lastName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_birthDate",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_cin",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_email",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_ville",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "_phone",
+        type: "string",
+      },
+    ],
+    name: "setUser",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "userAddresses",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "users",
+    outputs: [
+      {
+        internalType: "string",
+        name: "firstName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "lastName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "birthDate",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "CIN",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "email",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "ville",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "phone",
+        type: "string",
+      },
+      {
+        internalType: "bool",
+        name: "isVoted",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_userAddress",
+        type: "address",
+      },
+    ],
+    name: "vote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+];
 
 import NextLink from "next/link";
 import { Spinner } from "@nextui-org/react"; // Ensure you have Next UI installed
@@ -292,6 +295,7 @@ export default function App() {
   };
 
   const [loding, setLoding] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // Use the defined User type
 
   const webcamRef = React.useRef(null);
   const [imgSrc, setImgSrc] = React.useState(null);
@@ -420,22 +424,49 @@ export default function App() {
   const getUserByCinAndDateOfBirth = async () => {
     try {
       if (account) {
-        console.log("methods",contract.methods);
-        const user = await contract.methods.getUserByCinAndDateOfBirth(formData.cin, formData.birthDate).send({ from: account });
-        console.log('user',user);
-        
+        console.log("methods", contract.methods);
+        const UserInfo = await contract.methods
+          .getUserByAddress(account)
+          .call();
+        if (
+          formData.cin === UserInfo[3] &&
+          formData.birthDate === UserInfo[2]
+        ) {
+          setUser({
+            firstName: UserInfo[0],
+            lastName: UserInfo[1],
+          });
         toast.success("logged successfuly !");
         setStep(2);
-         
-       
-      } else {
+        } else {
+          toast.error(
+            "Cet adresse ne corespend pas a un utilisateur avec cet CIN et date de naissance"
+          );
+        }  
+      } else {  
         toast.error("Veuillez d'abord vous connecter à MetaMask");
       }
     } catch (error) {
       console.error(error);
       toast.error(
-        "Une erreur s'est produite lors de la définition des informations utilisateur"
+        "Les informations saisies ne correspondent à aucun utilisateur"
       );
+    }
+  };
+
+  const getUserByAddress = async () => {
+    try {
+      if (account) {
+        const UserInfo = await contract.methods
+          .getUserByAddress(account)
+          .call();
+        console.log("User Info:", UserInfo);
+      } else {
+        toast.error("Please connect to MetaMask first");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while retrieving user info");
     }
   };
 
@@ -458,7 +489,7 @@ export default function App() {
       await connectMetamask();
       await connectContract();
       await getUserByCinAndDateOfBirth();
-     
+
       // set the loading state to false
       setLoding(false);
     } catch (error) {
@@ -501,7 +532,9 @@ export default function App() {
           )}
           {step === 2 && (
             <div>
-              <h2>مرحبا Haddad Mohammed</h2>
+              <h2>
+                مرحبا {user?.firstName} {user?.lastName}
+              </h2>
               <h1 className="font-bold text-large text-danger text-bold ">
                 التقط الصورة
               </h1>
@@ -515,7 +548,6 @@ export default function App() {
                 <div className="flex justify-center items-center p-3 mb-1">
                   <div className="text-center">
                     <Spinner size="lg" color="primary" />
-                    
                   </div>
                 </div>
               )}
@@ -643,21 +675,26 @@ export default function App() {
             )}
 
             {!isVoted && isEligible && (
-             <Card className="w-full md:w-96 mx-auto   shadow-lg rounded-lg overflow-hidden" style={
-                {
+              <Card
+                className="w-full md:w-96 mx-auto   shadow-lg rounded-lg overflow-hidden"
+                style={{
                   marginTop: "-50px",
-                }
-              
-             }>
-             <div className="p-6 flex flex-col items-center bg-white">
-               <h4  className="text-center text-gray-800 mb-4">
-                 يمكنك التصويت الان
-               </h4>
-               <Button color="danger" variant="bordered" onClick={toRoute} className="w-full">
-                 التالي
-               </Button>
-             </div>
-           </Card>
+                }}
+              >
+                <div className="p-6 flex flex-col items-center bg-white">
+                  <h4 className="text-center text-gray-800 mb-4">
+                    يمكنك التصويت الان
+                  </h4>
+                  <Button
+                    color="danger"
+                    variant="bordered"
+                    onClick={toRoute}
+                    className="w-full"
+                  >
+                    التالي
+                  </Button>
+                </div>
+              </Card>
             )}
           </div>
         )}
