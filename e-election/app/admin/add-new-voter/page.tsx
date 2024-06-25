@@ -505,12 +505,14 @@ export default function App() {
                 <Input
                   type="text"
                   label="First name"
+                  required
                   onChange={(e) =>
                     setFormData({ ...formData, firstName: e.target.value })
                   }
                 />
                 <Input
                   type="text"
+                  required
                   label="Last name"
                   onChange={(e) =>
                     setFormData({ ...formData, lastName: e.target.value })
@@ -520,6 +522,7 @@ export default function App() {
               <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
                 <Input
                   type="email"
+                  required
                   label="Email"
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -527,6 +530,7 @@ export default function App() {
                 />
                 <Input
                   type="tel"
+                  required
                   label="Phone number"
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
@@ -545,6 +549,7 @@ export default function App() {
                 <Input
                   type="text"
                   label="CIN"
+                  required
                   onChange={(e) =>
                     setFormData({ ...formData, cin: e.target.value })
                   }
@@ -554,6 +559,7 @@ export default function App() {
                 <Input
                   type="text"
                   label=" city"
+                  required
                   onChange={(e) =>
                     setFormData({ ...formData, city: e.target.value })
                   }

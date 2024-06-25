@@ -97,8 +97,7 @@ export default function App() {
       await connectMetamask();
       await connectContract();
       await vote();
-      toast.success("You voted successfully!");
-      router.push("/");
+      
     } else {
       setIsVoted(-1);
     }
@@ -146,7 +145,8 @@ export default function App() {
     try {
       if (account && contract) {
         await contract.methods.vote(formData.uid, 0).send({ from: account });
-        toast.success("Voter added successfully!");
+        toast.success("You voted successfully!");
+        router.push("/");
       } else {
         toast.error("Please connect to MetaMask first");
       }

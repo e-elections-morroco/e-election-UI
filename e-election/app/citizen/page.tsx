@@ -523,6 +523,8 @@ export default function App() {
                     <Input
                       type="text"
                       label="رقم البطاقة الوطنية"
+                      required
+                      isRequired
                       onChange={(e) =>
                         setFormData({ ...formData, cin: e.target.value })
                       }
@@ -533,6 +535,7 @@ export default function App() {
                   <DateInput
                     label={"تاريخ الميلاد"}
                     placeholderValue={new CalendarDate(1995, 11, 6)}
+                    isRequired
                     className="max-w-sm"
                     onChange={(value) =>
                       setFormData({ ...formData, birthDate: value.toString() })
