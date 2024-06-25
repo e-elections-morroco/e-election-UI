@@ -8,257 +8,255 @@ import Web3 from "web3";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import data from "./votes.json";
-const contractAddress1 = "0x862F1e39D737b822877B42757AD26986D4C69e22"; // User
-const contractABI1 = [
-  [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        }
-      ],
-      "name": "getUserByAddress",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_cin",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_dateOfBirth",
-          "type": "string"
-        }
-      ],
-      "name": "getUserByCinAndDateOfBirth",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "_firstName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_lastName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_birthDate",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_cin",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_ville",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_phone",
-          "type": "string"
-        }
-      ],
-      "name": "setUser",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "userAddresses",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "users",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "firstName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "lastName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "birthDate",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "CIN",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "ville",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "phone",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        }
-      ],
-      "name": "vote",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ],
+const contractAddress1 = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
+const contractABI1= [
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "getUserByAddress",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_dateOfBirth",
+"type": "string"
+}
+],
+"name": "getUserByCinAndDateOfBirth",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+},
+{
+"internalType": "string",
+"name": "_firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_phone",
+"type": "string"
+}
+],
+"name": "setUser",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "uint256",
+"name": "",
+"type": "uint256"
+}
+],
+"name": "userAddresses",
+"outputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"name": "users",
+"outputs": [
+{
+"internalType": "string",
+"name": "firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "CIN",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "phone",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "vote",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+}
 ];
 
 const contractAddress2 = "0x15628DA52e0Ad01261Ab417FfC055E17E2606d3c"; // Remplacez ceci par l'adresse du contrat Electeur
@@ -387,7 +385,7 @@ export default function App() {
   const [step, setStep] = useState(1);
   const [isVoted, setIsVoted] = useState(-1);
   const [formData, setFormData] = useState({
-    uid: 0,
+    uid: 1,
   });
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -413,7 +411,7 @@ export default function App() {
   };
 
   const router = useRouter();
-  let contract: any;
+  let contract2: any;
   let account: any;
 
   const connectMetamask = async () => {
@@ -437,11 +435,11 @@ export default function App() {
     try {
       if (account) {
         (window as any).web3 = new Web3((window as any).ethereum);
-        contract = new (window as any).web3.eth.Contract(
+        contract2 = new (window as any).web3.eth.Contract(
           contractABI2,
           contractAddress2
         );
-        console.log("Connected to contract at address: " + contractAddress2);
+        console.log("Connected to contract2 at address: " + contractAddress2);
       } else {
         console.log("Please connect to MetaMask first");
       }
@@ -452,9 +450,9 @@ export default function App() {
 
   const vote = async () => {
     try {
-      if (account && contract) {
+      if (account && contract2) {
 
-        await contract.methods.vote(formData.uid).send({ from: account });
+        await contract2.methods.vote(formData.uid).send({ from: account });
         console.log("UID",formData.uid);
         toast.success("You voted successfully!");
         router.push("/");

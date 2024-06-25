@@ -19,258 +19,258 @@ import Web3 from "web3";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-const contractAddress = "0x862F1e39D737b822877B42757AD26986D4C69e22"; // Remplacez ceci par l'adresse du contrat User
-const contractABI = [
-  [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        }
-      ],
-      "name": "getUserByAddress",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_cin",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_dateOfBirth",
-          "type": "string"
-        }
-      ],
-      "name": "getUserByCinAndDateOfBirth",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "string",
-          "name": "_firstName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_lastName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_birthDate",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_cin",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_ville",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_phone",
-          "type": "string"
-        }
-      ],
-      "name": "setUser",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "userAddresses",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "users",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "firstName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "lastName",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "birthDate",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "CIN",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "email",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "ville",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "phone",
-          "type": "string"
-        },
-        {
-          "internalType": "bool",
-          "name": "isVoted",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_userAddress",
-          "type": "address"
-        }
-      ],
-      "name": "vote",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ],
+const contractAddress = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
+const contractABI= [
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "getUserByAddress",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_dateOfBirth",
+"type": "string"
+}
+],
+"name": "getUserByCinAndDateOfBirth",
+"outputs": [
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+},
+{
+"internalType": "string",
+"name": "_firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_cin",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "_phone",
+"type": "string"
+}
+],
+"name": "setUser",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "uint256",
+"name": "",
+"type": "uint256"
+}
+],
+"name": "userAddresses",
+"outputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "",
+"type": "address"
+}
+],
+"name": "users",
+"outputs": [
+{
+"internalType": "string",
+"name": "firstName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "lastName",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "birthDate",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "CIN",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "email",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "ville",
+"type": "string"
+},
+{
+"internalType": "string",
+"name": "phone",
+"type": "string"
+},
+{
+"internalType": "bool",
+"name": "isVoted",
+"type": "bool"
+}
+],
+"stateMutability": "view",
+"type": "function"
+},
+{
+"inputs": [
+{
+"internalType": "address",
+"name": "_userAddress",
+"type": "address"
+}
+],
+"name": "vote",
+"outputs": [],
+"stateMutability": "nonpayable",
+"type": "function"
+}
 ];
+
+
 import NextLink from "next/link";
 import { Spinner } from "@nextui-org/react"; // Ensure you have Next UI installed
 
@@ -420,10 +420,10 @@ export default function App() {
   const getUserByCinAndDateOfBirth = async () => {
     try {
       if (account) {
-        const user = await contract.methods
-          .getUserByCinAndDateOfBirth(formData.cin, formData.birthDate)
-          .send({ from: account });
+        console.log("methods",contract.methods);
+        const user = await contract.methods.getUserByCinAndDateOfBirth(formData.cin, formData.birthDate).send({ from: account });
         console.log('user',user);
+        
         toast.success("logged successfuly !");
         setStep(2);
          
