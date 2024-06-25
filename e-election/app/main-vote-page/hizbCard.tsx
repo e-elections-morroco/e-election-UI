@@ -5,8 +5,11 @@ interface HizbCardProps {
   hizb: {
     uid: number;
     image: string;
+    logo: string;
     name: string;
+    party: string;
     description: string;
+    
     // Add more properties as needed
   };
 }
@@ -22,7 +25,13 @@ const HizbCard: React.FC<HizbCardProps> = ({ hizb }) => {
         <CardBody className="flex justify-between">
                     <div className="flex items-center justify-around">
                         <div>
-                           <img src="imgs/imagehizb1.png" alt="hizb nahda" /> 
+                           <img src={hizb.logo} alt={hizb.party}  style={
+                                {
+                                    width: "250px",
+                                    height: "250px"
+                                }
+                            
+                           }/> 
 
                              <span 
                                 style={
@@ -33,14 +42,14 @@ const HizbCard: React.FC<HizbCardProps> = ({ hizb }) => {
                                     }
                                 }
                              >
-                                hizb alasala wa elmo3asara
+                                {hizb.party}
                              </span>
 
                              <div className="flex items-center justify-end">
 
 
                                <div className="p-5">
-                                <Tooltip content="ma3loumat idafiya" color="danger">
+                                <Tooltip content={hizb.description} color="danger">
                                              ?
                                 </Tooltip>
                                 </div>
@@ -53,11 +62,11 @@ const HizbCard: React.FC<HizbCardProps> = ({ hizb }) => {
                                     }
                                 
                                 }>
-                                    kamal wazir tarbiya
+                                  {hizb.name}
                                 </div>
                                 <Avatar
 
-                                src="imgs/imagehizb1.png"
+                                src={hizb.image}
                                 size="lg"
                                 className="w-20 h-20 text-large"
                                 />

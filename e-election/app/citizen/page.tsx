@@ -358,7 +358,6 @@ export default function App() {
         } else {
           console.log("Image is invalid");
           toast.error("Invalid Image");
-          setStep(3);
           setImgSrc(null);
         }
       } catch (error: any) {
@@ -369,7 +368,7 @@ export default function App() {
         } else {
           console.error("Error setting up request:", error.message);
         }
-        setStep(3);
+        toast.error("Invalid Image");
         setImgSrc(null);
       }
     } else {
@@ -423,10 +422,9 @@ export default function App() {
           .getUserByCinAndDateOfBirth(formData.cin, formData.birthDate)
           .send({ from: account });
         toast.success("logged successfuly !");
-        console.log(user);
-        console.log(user[0]);
-        console.log(user[1]);
-        console.log(user[2]);
+        setStep(2);
+         
+       
       } else {
         toast.error("Veuillez d'abord vous connecter à MetaMask");
       }
@@ -449,6 +447,7 @@ export default function App() {
       toast.error("Une erreur s'est produite lors de l'inscription");
     }
   };
+
   const toStep2 = async () => {
     try {
       // set the loading state to true
@@ -456,7 +455,7 @@ export default function App() {
       await connectMetamask();
       await connectContract();
       await getUserByCinAndDateOfBirth();
-      setStep(2);
+     
       // set the loading state to false
       setLoding(false);
     } catch (error) {
@@ -510,12 +509,10 @@ export default function App() {
           {step === 1 && (
             <div>
               {loding && (
-                <div className="flex justify-center items-center h-screen">
+                <div className="flex justify-center items-center p-3 mb-1">
                   <div className="text-center">
                     <Spinner size="lg" color="primary" />
-                    <p className="mt-4 text-lg font-medium text-gray-600">
-                      Loading...
-                    </p>
+                    
                   </div>
                 </div>
               )}
