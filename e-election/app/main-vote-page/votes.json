@@ -1,6 +1,33 @@
 {
     "data": [
         {
+            "uid": "1",
+            "NAME": "Michael White",
+            "PHOTO": "https://randomuser.me/api/portraits/men/5.jpg",
+            "DESCRIPTION": "Michael White (born June 3, 1959) is a politician who served as the Minister of Communications and the government spokesperson from November 2002 to October 2007. He also served as the Minister of Housing and Urban Development from 2012 to 2017.",
+            "LOGO": "https://via.placeholder.com/150?text=Logo5",
+            "PARTY": "Development Party", 
+            "isVoted" : false
+        },
+        {
+            "uid": "2",
+            "NAME": "Emma Green",
+            "PHOTO": "https://randomuser.me/api/portraits/women/6.jpg",
+            "DESCRIPTION": "Emma Green, born on January 5, 1969, is a university professor specializing in the sociology of languages. She served as the Minister of Youth and Sports until her resignation in 2015.",
+            "LOGO": "https://via.placeholder.com/150?text=Logo6",
+            "PARTY": "Movement Party", 
+            "isVoted" : false
+        },
+        {
+            "uid": "3",
+            "NAME": "Daniel Black",
+            "PHOTO": "https://randomuser.me/api/portraits/men/7.jpg",
+            "DESCRIPTION": "Daniel Black, born on February 12, 1972, is a political leader who has served in various governmental positions. He is currently the leader of the Constitutional Union Party.",
+            "LOGO": "https://via.placeholder.com/150?text=Logo7",
+            "PARTY": "Constitutional Union Party", 
+            "isVoted" : false
+        },
+        {
             "uid": "3",
             "NAME": "John Doe",
             "PHOTO": "https://randomuser.me/api/portraits/men/1.jpg",
@@ -35,33 +62,7 @@
             "LOGO": "https://via.placeholder.com/150?text=Logo4",
             "PARTY": "Independence Party",
             "isVoted" : false
-        },
-        {
-            "uid": "7",
-            "NAME": "Michael White",
-            "PHOTO": "https://randomuser.me/api/portraits/men/5.jpg",
-            "DESCRIPTION": "Michael White (born June 3, 1959) is a politician who served as the Minister of Communications and the government spokesperson from November 2002 to October 2007. He also served as the Minister of Housing and Urban Development from 2012 to 2017.",
-            "LOGO": "https://via.placeholder.com/150?text=Logo5",
-            "PARTY": "Development Party", 
-            "isVoted" : false
-        },
-        {
-            "uid": "8",
-            "NAME": "Emma Green",
-            "PHOTO": "https://randomuser.me/api/portraits/women/6.jpg",
-            "DESCRIPTION": "Emma Green, born on January 5, 1969, is a university professor specializing in the sociology of languages. She served as the Minister of Youth and Sports until her resignation in 2015.",
-            "LOGO": "https://via.placeholder.com/150?text=Logo6",
-            "PARTY": "Movement Party", 
-            "isVoted" : false
-        },
-        {
-            "uid": "9",
-            "NAME": "Daniel Black",
-            "PHOTO": "https://randomuser.me/api/portraits/men/7.jpg",
-            "DESCRIPTION": "Daniel Black, born on February 12, 1972, is a political leader who has served in various governmental positions. He is currently the leader of the Constitutional Union Party.",
-            "LOGO": "https://via.placeholder.com/150?text=Logo7",
-            "PARTY": "Constitutional Union Party", 
-            "isVoted" : false
         }
+       
     ]
 }
