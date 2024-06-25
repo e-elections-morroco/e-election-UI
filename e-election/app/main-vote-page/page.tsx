@@ -175,17 +175,13 @@ export default function App() {
       <div className="flex items-center flex-wrap">
         {filteredHizbs.map((hizb, index) => (
           <motion.div
-            key={index}
+            key={hizb.uid}
             whileHover={{ scale: 1.2 }}
             transition={{ duration: 0.2 }}
             onClick={() => handelClick(index)}
           >
             <div className="p-12" style={{ flex: '0 0 33.3333%' }}>
-              {isVoted === index && (
-                <span className="text-danger text-bold flex-center text-center" style={{ fontSize: "3.5rem" }}>
-                  X
-                </span>
-              )}
+             
               <HizbCard
                 hizb={{
                   uid: index,
@@ -194,6 +190,7 @@ export default function App() {
                   name: hizb.NAME,
                   description: hizb.DESCRIPTION,
                   party: hizb.PARTY,
+                  isVoted: isVoted === index,
                 }}
               />
             </div>
