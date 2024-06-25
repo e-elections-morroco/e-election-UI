@@ -31,11 +31,13 @@ export const Navbar = () => {
 	return (
 		<NextUINavbar  shouldHideOnScroll maxWidth="sm" className="p-4"  >
 		<NavbarBrand>
+			<NextLink href="/">
 			<img
-				width={80}
+				width={90}
 				alt="NextUI hero Image"
 				src="imgs/Coat_of_arms_of_Morocco.svg.png"
 			/>
+			</NextLink>
 
 		</NavbarBrand>
 		<NavbarContent className="hidden sm:flex gap-4" justify="center">
@@ -47,7 +49,7 @@ export const Navbar = () => {
 			<Button onClick={toRoute} size="lg" color="primary" href="/admin" variant="flat">
 			   <span style={
 				{color: "red"}
-			   } >Im Admin</span>
+			   } >Espace admine</span>
 			</Button>
 		  </NavbarItem>
 		</NavbarContent>

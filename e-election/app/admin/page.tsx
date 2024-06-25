@@ -5,6 +5,7 @@ import {CalendarDate} from "@internationalized/date";
 import toast from "react-hot-toast"; 
 import { useRouter } from "next/navigation";
 
+import NextLink from "next/link";
 
 
 
@@ -36,7 +37,27 @@ export default function App() {
     }
 
   return (
-    <Card className="p-10">
+
+
+    <div  className=" ">
+
+      <div style={
+        {
+          display: "flex",
+          justifyContent: "center",
+          padding: "20px",
+          marginTop: "-80px",
+        }
+      }>
+      <NextLink href="/">
+			<img
+				width={80}
+				alt="Roayaume du Maroc"
+				src="imgs/Coat_of_arms_of_Morocco.svg.png"
+			/>
+			</NextLink>
+      </div>
+        <Card className="p-10">
     <CardHeader className="pb-0 p-2 px-2 flex-col items-center">
       
       <h1 className="font-bold text-large text-danger text-bold ">Login</h1>
@@ -81,6 +102,8 @@ export default function App() {
    </div>
      
   </Card>
+    </div>
+  
      
   );
 }

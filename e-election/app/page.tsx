@@ -26,7 +26,12 @@ export default function Home() {
 			</div>
 			<section className="flex justify-around">
 		
-			<div className="flex flex-col items-right  gap-10 py-10 md:py-10 mt-12 ml-12">
+			<div className="flex flex-col items-right  gap-10 py-10 md:py-10 mt-12 ml-12" style={
+				{
+					marginTop: "80px",
+				}
+			
+			} >
 				<div className="inline-block max-w-lg text-center justify-center">
 				<h1 className={title({ color: "green" })}>الإلكترونية&nbsp;</h1>
 				<h1 className={title()} style={{color:"red"}}>   الانتخابات &nbsp;</h1>
@@ -49,7 +54,7 @@ export default function Home() {
 			</div>
 			
 			{/* i want to add a reghit section that have a photo  */}
-			<div className="inline-block max-w-lg text-center justify-center ">
+			<div className="flex inline-block max-w-lg text-center justify-center ">
 				<img
 					src="imgs/hero.png"
 					alt="NextUI hero Image"
