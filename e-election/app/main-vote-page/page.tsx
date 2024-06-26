@@ -396,6 +396,7 @@ export default function App() {
 
   const handelClick = async (index: number) => {
     setIsVoted(index);
+    if(isVoted == index) { setIsVoted(-1);  return;}
     if (confirm("Are you sure you want to vote for this party?")) {
       setFormData({
         ...formData,
@@ -495,7 +496,7 @@ export default function App() {
         {filteredHizbs.map((hizb, index) => (
           <motion.div
             key={hizb.uid}
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
             onClick={() => handelClick(index)}
           >
