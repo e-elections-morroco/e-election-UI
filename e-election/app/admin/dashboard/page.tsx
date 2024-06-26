@@ -223,7 +223,7 @@ const Dashboard: React.FC = () => {
         })
       );
 
-        setCandidates(updatedCandidates);
+        setCandidates(mappedParties);
 
         const voteCounts: { [key: number]: number } = Array.from(uniqueElecteurs.entries()).reduce(
           (acc: { [key: number]: number }, [UID, voteCount]) => {
