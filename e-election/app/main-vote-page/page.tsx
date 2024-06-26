@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import Web3 from "web3";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import data from "./votes.json";
+import data from "@/data/votes.json";
 import  VoiceChatIcon  from "@/components/voicehelper";
 const contractAddress1 = "0xfa0d7dA8D1024D4b411C0f55B635c171F7ab9DD5"; // Remplacez ceci par l'adresse du contrat User
 const contractABI1= [
