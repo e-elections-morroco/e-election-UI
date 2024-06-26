@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import votesData from "./votes.json";
 import { toast } from "react-hot-toast";
 import Web3 from "web3";
- import NextLink from "next/link";
+import NextLink from "next/link";
 
 // Define interface for party data
 interface Party {
@@ -139,8 +139,7 @@ const contractABI = [
 ];
 
 const Dashboard: React.FC = () => {
-   
-  const [parties, setParties] = useState<Party[]>([]);
+  const [candidates, setCandidates] = useState<Party[]>([]);
   const [result, setResult] = useState<{ [key: number]: number }>({});
   const [totalVotes, setTotalVotes] = useState<number>(0);
   const [account, setAccount] = useState<string | null>(null);
@@ -160,12 +159,16 @@ const Dashboard: React.FC = () => {
     getAllElecteurs();
   }, [contract]);
 
+  useEffect(() => {
+    // Set initial candidates from JSON data
+    setCandidates(votesData.data);
+  }, []);
+
   // Function to connect Metamask
   const connectMetamask = async () => {
     try {
       if ((window as any).ethereum) {
-       
-const accounts = await (window as any).ethereum.request({
+        const accounts = await (window as any).ethereum.request({
           method: "eth_requestAccounts",
         });
         setAccount(accounts[0]);
@@ -193,22 +196,21 @@ const accounts = await (window as any).ethereum.request({
   };
 
   // Function to fetch all electors
- const getAllElecteurs = async () => {
-  try {
-    if (contract) {
-      const result = await contract.methods.getAllElecteurs().call();
+  const getAllElecteurs = async () => {
+    try {
+      if (contract) {
+        const result = await contract.methods.getAllElecteurs().call();
 
-      const uniqueElecteurs = new Map<number, number>();
-      result.forEach((electeur: { UID: number; voteCount: number }) => {
-        if (!uniqueElecteurs.has(electeur.UID)) {
-          uniqueElecteurs.set(Number(electeur.UID), Number(electeur.voteCount));
-        }
-      });
+        const uniqueElecteurs = new Map<number, number>();
+        result.forEach((electeur: { UID: number; voteCount: number }) => {
+          if (!uniqueElecteurs.has(electeur.UID)) {
+            uniqueElecteurs.set(Number(electeur.UID), Number(electeur.voteCount));
+          }
+        });
 
       uniqueElecteurs.forEach((voteCount, UID) => {
         console.log(`UID: ${UID}, Nombre de Votes: ${voteCount}`);
       });
-  
 
       const mappedParties: Party[] = Array.from(uniqueElecteurs.entries()).map(
         ([UID, voteCount]) => ({
@@ -221,52 +223,39 @@ const accounts = await (window as any).ethereum.request({
         })
       );
 
-      setParties(mappedParties);
+        setCandidates(updatedCandidates);
 
-      const voteCounts: { [key: number]: number } = Array.from(uniqueElecteurs.entries()).reduce(
-        (acc: { [key: number]: number }, [UID, voteCount]) => {
-          acc[UID] = voteCount;
-          return acc;
-        },
-        {}
-      );
+        const voteCounts: { [key: number]: number } = Array.from(uniqueElecteurs.entries()).reduce(
+          (acc: { [key: number]: number }, [UID, voteCount]) => {
+            acc[UID] = voteCount;
+            return acc;
+          },
+          {}
+        );
 
-      setResult(voteCounts);
+        setResult(voteCounts);
 
-      const total = Array.from(uniqueElecteurs.values()).reduce(
-        (acc: number, voteCount: number) => acc + voteCount,
-        0
-      );
+        const total = Array.from(uniqueElecteurs.values()).reduce(
+          (acc: number, voteCount: number) => acc + voteCount,
+          0
+        );
 
-      setTotalVotes(total);
-      console.log("All electors:", result);
-    } else {
-      console.error("Please connect your MetaMask account and connect the contract");
+        setTotalVotes(total);
+        console.log("All electors:", result);
+      } else {
+        console.error("Please connect your MetaMask account and connect the contract");
+      }
+    } catch (error) {
+      console.error("Error fetching all electors:", error);
+      toast.error("Failed to fetch electors");
     }
-  } catch (error) {
-    console.error("Error fetching all electors:", error);
-    toast.error("Failed to fetch electors");
-  }
-};
-
-  
+  };
 
   return (
     <div className="p-4 bg-gray-100">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "-110px",
-          padding: "20px",
-        }}
-      >
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "-110px", padding: "20px" }}>
         <NextLink href="/">
-          <img
-            width={80}
-            alt="Roayaume du Maroc"
-            src="../imgs/Coat_of_arms_of_Morocco.svg.png"
-          />
+          <img width={80} alt="Roayaume du Maroc" src="../imgs/Coat_of_arms_of_Morocco.svg.png" />
         </NextLink>
       </div>
       <div className="mb-6 bg-white p-4 rounded-md shadow-md">
@@ -276,19 +265,20 @@ const accounts = await (window as any).ethereum.request({
         </div>
       </div>
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {parties.map((party) => (
-          <div key={party.uid} className="bg-white p-4 rounded-md shadow-md">
-            <h3 className="text-xl font-bold">{party.PARTY}</h3>
-            {party.PHOTO && (
-              <img
-                src={party.LOGO}
-                alt={party.NAME}
-                className="mt-2 rounded-full h-20 w-20 object-cover"
-              />
+        {candidates.map((candidate) => (
+          <div key={candidate.uid} className="bg-white p-4 rounded-md shadow-md">
+            <h3 className="text-xl font-bold">{candidate.NAME}</h3>
+            {candidate.PHOTO && (
+              <img src={candidate.LOGO} alt={candidate.NAME} className="mt-2 h-20 w-40 object-cover" />
             )}
-            <p className="mt-2">Votes: {result[party.uid] || 0}</p>
+            
+             
+            <p className="mt-2">Party: {candidate.PARTY}</p>
+            <p className="mt-2 text-danger">Votes: {result[candidate.uid] || 0}</p>
           </div>
         ))}
+     
+
       </div>
     </div>
   );
