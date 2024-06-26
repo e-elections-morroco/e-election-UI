@@ -185,7 +185,7 @@ const accounts = await (window as any).ethereum.request({
       const web3 = new Web3((window as any).ethereum);
       const contractInstance = new web3.eth.Contract(contractABI, contractAddress);
       setContract(contractInstance);
-      toast.success(`Connected to contract at address: ${contractAddress}`);
+      console.log(`Connected to contract at address: ${contractAddress}`);
     } catch (error) {
       console.error("Error connecting to contract:", error);
       toast.error("Failed to connect to contract");
@@ -193,41 +193,62 @@ const accounts = await (window as any).ethereum.request({
   };
 
   // Function to fetch all electors
-  const getAllElecteurs = async () => {
-    try {
-      if (contract) {
-        const result = await contract.methods.getAllElecteurs().call();
-        const mappedParties: Party[] = result.map((electeur: any) => ({
-          uid: electeur.UID,
-          NAME: `Electeur ${electeur.UID}`,
-          DESCRIPTION: `Votes: ${electeur.voteCount}`,
-          PARTY: `Party ${electeur.UID}`,
+ const getAllElecteurs = async () => {
+  try {
+    if (contract) {
+      const result = await contract.methods.getAllElecteurs().call();
+
+      const uniqueElecteurs = new Map<number, number>();
+      result.forEach((electeur: { UID: number; voteCount: number }) => {
+        if (!uniqueElecteurs.has(electeur.UID)) {
+          uniqueElecteurs.set(Number(electeur.UID), Number(electeur.voteCount));
+        }
+      });
+
+      uniqueElecteurs.forEach((voteCount, UID) => {
+        console.log(`UID: ${UID}, Nombre de Votes: ${voteCount}`);
+      });
+
+      const mappedParties: Party[] = Array.from(uniqueElecteurs.entries()).map(
+        ([UID, voteCount]) => ({
+          uid: UID,
+          NAME: `Electeur ${UID}`,
+          DESCRIPTION: `Votes: ${voteCount}`,
+          PARTY: `Party ${UID}`,
           LOGO: "", // Provide a logo URL or placeholder
           PHOTO: "", // Provide a photo URL or placeholder
-        }));
-        setParties(mappedParties);
-        const voteCounts: { [key: number]: number } = result.reduce(
-          (acc: { [key: number]: number }, electeur: any) => {
-            acc[electeur.UID] = electeur.voteCount;
-            return acc;
-          },
-          {}
-        );
-        setResult(voteCounts);
-        const total = result.reduce(
-          (acc: number, electeur: any) => acc + electeur.voteCount,
-          0
-        );
-        setTotalVotes(total);
-        console.log("All electors:", result);
-      } else {
-        toast.error("Please connect your MetaMask account and connect the contract");
-      }
-    } catch (error) {
-      console.error("Error fetching all electors:", error);
-      toast.error("Failed to fetch electors");
+        })
+      );
+
+      setParties(mappedParties);
+
+      const voteCounts: { [key: number]: number } = Array.from(uniqueElecteurs.entries()).reduce(
+        (acc: { [key: number]: number }, [UID, voteCount]) => {
+          acc[UID] = voteCount;
+          return acc;
+        },
+        {}
+      );
+
+      setResult(voteCounts);
+
+      const total = Array.from(uniqueElecteurs.values()).reduce(
+        (acc: number, voteCount: number) => acc + voteCount,
+        0
+      );
+
+      setTotalVotes(total);
+      console.log("All electors:", result);
+    } else {
+      console.error("Please connect your MetaMask account and connect the contract");
     }
-  };
+  } catch (error) {
+    console.error("Error fetching all electors:", error);
+    toast.error("Failed to fetch electors");
+  }
+};
+
+  
 
   return (
     <div className="p-4 bg-gray-100">
