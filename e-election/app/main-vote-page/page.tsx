@@ -474,7 +474,7 @@ export default function App() {
       }
     } catch (error) {
       console.error(error);
-      toast.error("User Already Voted!");
+      toast.error("You have a problem with your vote or you are alrady voted!");
     }
   };
 

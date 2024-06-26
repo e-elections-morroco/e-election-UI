@@ -441,7 +441,7 @@ export default function App() {
        
         } else {
           toast.error(
-            "Cet adresse ne corespend pas a un utilisateur avec cet CIN et date de naissance"
+            "L'adresse de metamask ou Cin ou date de naissance ne correspondent pas à un utilisateur"
           );
         }  
       } else {  

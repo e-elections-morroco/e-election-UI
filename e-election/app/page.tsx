@@ -5,6 +5,7 @@ import { title, subtitle } from "@/components/primitives";
 import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import  {Navbar} from "@/components/navbar";
+import  VoiceChatIcon  from "@/components/voicehelper";
 export default function Home() {
 	const router = useRouter();
 
@@ -16,7 +17,10 @@ export default function Home() {
 
 
 	return (
+			
 		<div>
+			<VoiceChatIcon />
+
 			<div style={
 				{
 					marginTop: "-50px",
