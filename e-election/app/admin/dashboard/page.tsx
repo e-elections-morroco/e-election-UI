@@ -208,20 +208,16 @@ const Dashboard: React.FC = () => {
           }
         });
 
-      uniqueElecteurs.forEach((voteCount, UID) => {
-        console.log(`UID: ${UID}, Nombre de Votes: ${voteCount}`);
-      });
+        console.log("Unique electors:");
+        console.log(uniqueElecteurs);
+        uniqueElecteurs.forEach((voteCount, UID) => {
+          console.log(`UID: ${UID}, Nombre de Votes: ${voteCount}`);
+        });
 
-      const mappedParties: Party[] = Array.from(uniqueElecteurs.entries()).map(
-        ([UID, voteCount]) => ({
-          uid: UID,
-          NAME: `Electeur ${UID}`,
-          DESCRIPTION: `Votes: ${voteCount}`,
-          PARTY: `Party ${UID}`,
-          LOGO: "", // Provide a logo URL or placeholder
-          PHOTO: "", // Provide a photo URL or placeholder
-        })
-      );
+        const updatedCandidates = votesData.data.map((candidate: Party) => {
+          const voteCount = uniqueElecteurs.get(candidate.uid) || 0;
+          return { ...candidate, DESCRIPTION: `${candidate.DESCRIPTION} (Votes: ${voteCount})` };
+        });
 
         setCandidates(mappedParties);
 
