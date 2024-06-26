@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import votesData from "./votes.json";
+import votesData from "@/data/votes.json";
 import { toast } from "react-hot-toast";
 import Web3 from "web3";
 import NextLink from "next/link";
