@@ -433,9 +433,13 @@ export default function App() {
           formData.cin === UserInfo[3] &&
           formData.birthDate === UserInfo[2]
         ) {
+          localStorage.setItem("email",UserInfo[4])
+          localStorage.setItem("firstName",UserInfo[0])
+          localStorage.setItem("lastName",UserInfo[1])
           setUser({
             firstName: UserInfo[0],
             lastName: UserInfo[1],
+            // email:UserInfo[]
           });
         toast.success("logged successfuly !");
         setStep(2);
