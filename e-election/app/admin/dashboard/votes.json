@@ -10,6 +10,15 @@
             "isVoted" : false
         },
         {
+            "uid": 2,
+            "NAME": "أليس جونسون",
+            "PHOTO": "https://randomuser.me/api/portraits/women/3.jpg",
+            "DESCRIPTION": "أليس جونسون، مواليد 25 سبتمبر 1954، ناشطة ملتزمة منذ السبعينيات. شغلت مناصب مختلفة داخل حزب الوحدة الاجتماعية وترأست المجموعة البرلمانية للحزب من 1999 إلى 2007.",
+            "LOGO": "https://via.placeholder.com/150?text=حزب6",
+            "PARTY": "حزب الوحدة الاجتماعية", 
+            "isVoted" : false
+        },
+        {
             "uid": 3,
             "NAME": "إيما جرين",
             "PHOTO": "https://randomuser.me/api/portraits/women/6.jpg",
@@ -44,24 +53,7 @@
             "LOGO": "https://via.placeholder.com/150?text=حزب5",
             "PARTY": "حزب التحالف الوطني",
             "isVoted" : false
-        },
-        {
-            "uid": 7,
-            "NAME": "أليس جونسون",
-            "PHOTO": "https://randomuser.me/api/portraits/women/3.jpg",
-            "DESCRIPTION": "أليس جونسون، مواليد 25 سبتمبر 1954، ناشطة ملتزمة منذ السبعينيات. شغلت مناصب مختلفة داخل حزب الوحدة الاجتماعية وترأست المجموعة البرلمانية للحزب من 1999 إلى 2007.",
-            "LOGO": "https://via.placeholder.com/150?text=حزب6",
-            "PARTY": "حزب الوحدة الاجتماعية", 
-            "isVoted" : false
-        },
-        {
-            "uid": 8,
-            "NAME": "روبرت براون",
-            "PHOTO": "https://randomuser.me/api/portraits/men/4.jpg",
-            "DESCRIPTION": "الدكتور روبرت براون انتخب كأمين عام لحزب الاستقلال في 7 أكتوبر 2017. مواليد 1964، وكان عضوًا نشطًا في الحزب منذ سن المراهقة.",
-            "LOGO": "https://via.placeholder.com/150?text=حزب7",
-            "PARTY": "حزب الاستقلال",
-            "isVoted" : false
         }
+         
     ]
 }
