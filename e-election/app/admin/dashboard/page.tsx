@@ -219,6 +219,7 @@ const accounts = await (window as any).ethereum.request({
           0
         );
         setTotalVotes(total);
+        console.log("All electors:", result);
       } else {
         toast.error("Please connect your MetaMask account and connect the contract");
       }

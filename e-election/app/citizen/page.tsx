@@ -18,6 +18,7 @@ import Web3 from "web3";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import  VoiceChatIcon  from "@/components/voicehelper";
 interface User {
   firstName: string;
   lastName: string;
@@ -505,6 +506,7 @@ export default function App() {
   };
   return (
     <div>
+      <VoiceChatIcon />
       <div
         style={{
           display: "flex",

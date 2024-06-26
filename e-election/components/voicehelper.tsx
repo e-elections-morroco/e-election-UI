@@ -89,8 +89,14 @@ const VoiceChatIcon = () => {
   };
 
   const lireTexte = (texte: string) => {
-    // Utilisation de ResponsiveVoice pour la synthèse vocale
-    (window as any).responsiveVoice.speak(texte, "Arabic Female", { rate: 0.9 });
+    console.log("le text a lire ", texte)
+    const synth = window.speechSynthesis;
+    const voices = synth.getVoices();
+    console.log("Available voices:", voices);
+    const utterance = new SpeechSynthesisUtterance(texte);
+    utterance.lang = 'ar-SA'; // Définir la langue sur l'arabe
+    utterance.rate = 1.2; // Définir la vitesse de parole
+    synth.speak(utterance);
   };
 
   return (
@@ -99,7 +105,7 @@ const VoiceChatIcon = () => {
         position: "fixed",
         bottom: "20px",
         right: "20px",
-        backgroundColor: isRecording ? "#FF0000" : "#007BFF",
+        backgroundColor: isRecording ? "#FF0000" : "#2AD16D",
         borderRadius: "50%",
         width: "60px",
         height: "60px",
