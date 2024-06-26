@@ -219,7 +219,7 @@ const Dashboard: React.FC = () => {
           return { ...candidate, DESCRIPTION: `${candidate.DESCRIPTION} (Votes: ${voteCount})` };
         });
 
-        setCandidates(mappedParties);
+        setCandidates(updatedCandidates);
 
         const voteCounts: { [key: number]: number } = Array.from(uniqueElecteurs.entries()).reduce(
           (acc: { [key: number]: number }, [UID, voteCount]) => {
