@@ -49,7 +49,7 @@ export const Navbar = () => {
 			<Button onClick={toRoute} size="lg" color="primary" href="/admin" variant="flat">
 			   <span style={
 				{color: "red"}
-			   } >Espace admine</span>
+			   } >Espace admin</span>
 			</Button>
 		  </NavbarItem>
 		</NavbarContent>

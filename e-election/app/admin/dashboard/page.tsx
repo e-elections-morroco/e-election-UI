@@ -208,6 +208,7 @@ const accounts = await (window as any).ethereum.request({
       uniqueElecteurs.forEach((voteCount, UID) => {
         console.log(`UID: ${UID}, Nombre de Votes: ${voteCount}`);
       });
+  
 
       const mappedParties: Party[] = Array.from(uniqueElecteurs.entries()).map(
         ([UID, voteCount]) => ({
