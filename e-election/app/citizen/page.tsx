@@ -438,6 +438,7 @@ export default function App() {
           });
         toast.success("logged successfuly !");
         setStep(2);
+       
         } else {
           toast.error(
             "Cet adresse ne corespend pas a un utilisateur avec cet CIN et date de naissance"

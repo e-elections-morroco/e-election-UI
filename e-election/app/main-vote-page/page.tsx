@@ -396,6 +396,8 @@ export default function App() {
 
   const handelClick = async (index: number) => {
     setIsVoted(index);
+    formData.uid = data.data[index].uid;
+    console.log(formData.uid)
     if(isVoted == index) { setIsVoted(-1);  return;}
     if (confirm("Are you sure you want to vote for this party?")) {
       setFormData({
