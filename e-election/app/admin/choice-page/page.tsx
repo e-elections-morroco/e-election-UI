@@ -22,8 +22,6 @@ const AdminChoicePage = () => {
         style={{
           display: "flex",
           justifyContent: "center",
-        
-    
           padding: "20px",
         }}
       >
@@ -38,7 +36,7 @@ const AdminChoicePage = () => {
        <div className="space-y-4 w-full max-w-sm">
         <Button
           onClick={() => toRoute("/admin/dashboard")}
-          className="w-full border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-100 transition duration-300"
+          className="w-full   border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-100 transition duration-300"
         >
           Go to Dashboard
         </Button>
