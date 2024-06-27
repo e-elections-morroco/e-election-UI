@@ -462,12 +462,14 @@ export default function App() {
   const vote = async () => {
     try {
       if (account && contract2) {
-
+        
         await contract1.methods.vote(account).send({ from: account });
         await contract2.methods.vote(formData.uid).send({ from: account });
+        // const result = co
+        //function email
         console.log("UID",formData.uid);
-       
-        toast.success("You voted successfully!");
+        await sendVoteSuccessEmail();
+        toast.success("You voted successfully , Check your Email !");
         router.push("/");
       } else {
         toast.error("Please connect to MetaMask first");
@@ -475,6 +477,35 @@ export default function App() {
     } catch (error) {
       console.error(error);
       toast.error("You have a problem with your vote or you are alrady voted!");
+    }
+  };
+  const sendVoteSuccessEmail = async () => {
+    try {
+      const Myemail =localStorage.getItem("email")??"";
+      const firstName =localStorage.getItem("firstName")??"";
+      const lastName =localStorage.getItem("lastName")??"";
+      const formData = new FormData();
+      formData.append('to', Myemail );
+      formData.append('firstname', firstName);
+      formData.append('lastname', lastName);
+
+      const response = await fetch('http://localhost:5000/api/email/vote-success', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send the email');
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        console.log('Email sent successfully');
+      } else {
+        console.error('Failed to send the email');
+      }
+    } catch (error) {
+      console.error('An error occurred while sending the email', error);
     }
   };
 
