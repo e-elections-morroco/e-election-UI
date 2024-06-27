@@ -30,7 +30,7 @@ export default function App() {
     const login = () => {
         if(formData.codeEmploye === user.codeEmploye && formData.password === user.password){
             toast.success("login success");
-            router.push("/admin/add-new-voter");
+            router.push("/admin/choice-page");
         }else{
             toast.error("wrong cridentials");
         }

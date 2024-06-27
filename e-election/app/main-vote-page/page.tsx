@@ -381,7 +381,6 @@ const contractABI2 = [
     "type": "function"
   }
 ];
-
 export default function App() {
   const [step, setStep] = useState(1);
   const [isVoted, setIsVoted] = useState(-1);

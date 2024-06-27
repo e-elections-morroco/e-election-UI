@@ -477,6 +477,7 @@ export default function App() {
           display: "flex",
           justifyContent: "center",
           marginTop: "-110px",
+          
           padding: "20px",
         }}
       >
